@@ -28,7 +28,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_swiper: ^1.1.4
+  #导入插件时是由于插件未做空安全的检查所以在dart2.0以上版本 需要在启动flutter run --no-sound-null-safety采取flutter混合开发，忽略插件中的空检查。
+  flutter_swiper: ^1.1.6
+  http: ^0.13.3
+#  flutter_swiper_null_safety: ^1.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
