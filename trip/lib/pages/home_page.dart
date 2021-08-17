@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:trip/model/home_model.dart';
+import 'package:trip/server/home_dao.dart';
 const APPBAR_SCROLL_OFFSET=100;
 // import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 // import 'package:flutter_swiper/flutter_swiper.dart';
@@ -18,6 +22,12 @@ class _HomepageState extends State<Homepage> {
     'https://img0.baidu.com/it/u=3231005548,635944634&fm=26&fmt=auto&gp=0.jpg'
   ];
   double appBarAlpha = 0;
+  String resultString='';
+  @override
+  void initState(){
+    super.initState();
+    loadData();
+  }
   _onScroll(offset) {
     print(offset);
     double alpha=offset/APPBAR_SCROLL_OFFSET;
@@ -31,7 +41,25 @@ class _HomepageState extends State<Homepage> {
     });
     print(appBarAlpha);
   }
-
+  loadData() async{
+  // HomeDao.fetch().then((result){
+  //   setState(() {
+  //     resultString=json.encode(result);
+  //   });
+  // }).catchError((e){
+  //   resultString=e.toString();
+  // });
+    try{
+      HomeModel model=await HomeDao.fetch();
+      setState(() {
+        resultString=json.encode(model.config);
+      });
+    }catch(e){
+      setState(() {
+        resultString=e.toString();
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
